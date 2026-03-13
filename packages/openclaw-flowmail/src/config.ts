@@ -10,7 +10,7 @@ const defaults: PluginConfig = {
   gmailAccount: '',
   gogPath: 'gog',
   listCommandTemplate:
-    'gog gmail search --account "{{gmailAccount}}" --query "{{syncQuery}}" --limit {{maxThreads}} --json',
+    'gog gmail search "{{syncQuery}}" --account "{{gmailAccount}}" --max {{maxThreads}} --json',
   threadCommandTemplate:
     'gog gmail get "{{threadId}}" --account "{{gmailAccount}}" --json',
   syncQuery:
@@ -43,6 +43,7 @@ const toInteger = (value: unknown, fallback: number): number => {
 
 export const getPluginConfig = (api: FlowMailPluginApi): PluginConfig => {
   const raw =
+    api.pluginConfig ??
     api.config?.plugins?.entries?.[PLUGIN_ID]?.config ??
     {};
 
@@ -74,3 +75,14 @@ export const interpolateTemplate = (
   template.replace(/\{\{(\w+)\}\}/g, (_match, key: string) =>
     String(variables[key] ?? ''),
   );
+
+export const hasConfiguredGmailAccount = (config: PluginConfig): boolean =>
+  config.gmailAccount.trim().length > 0;
+
+export const assertSyncConfig = (config: PluginConfig): void => {
+  if (!hasConfiguredGmailAccount(config)) {
+    throw new Error(
+      'FlowMail requires plugins.entries.openclaw-flowmail.config.gmailAccount before sync. Set the Gmail account that gog should read, then retry.',
+    );
+  }
+};

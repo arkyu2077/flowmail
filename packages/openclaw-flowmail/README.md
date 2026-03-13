@@ -52,6 +52,8 @@ Add this under `plugins.entries.openclaw-flowmail` in `~/.openclaw/openclaw.json
 }
 ```
 
+`gmailAccount` is no longer required just to install or enable the plugin, but it is required before `flowmail_sync` or background polling can read Gmail.
+
 ## `gog` command templates
 
 The plugin shells out to configurable command templates so you can adapt it to the exact `gog` syntax you use.
@@ -67,7 +69,7 @@ Available template variables:
 Defaults:
 
 - list:
-  - `gog gmail search --account "{{gmailAccount}}" --query "{{syncQuery}}" --limit {{maxThreads}} --json`
+  - `gog gmail search "{{syncQuery}}" --account "{{gmailAccount}}" --max {{maxThreads}} --json`
 - thread detail:
   - `gog gmail get "{{threadId}}" --account "{{gmailAccount}}" --json`
 

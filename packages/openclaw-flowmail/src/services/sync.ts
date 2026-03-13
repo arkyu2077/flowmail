@@ -15,6 +15,13 @@ const nowIso = () => new Date().toISOString();
 
 const buildCaseId = (threadId: string): string => `case:${threadId}`;
 
+const stringifyError = (value: unknown): string => {
+  if (value instanceof Error) {
+    return value.message;
+  }
+  return String(value);
+};
+
 export const syncMailbox = async (
   api: FlowMailPluginApi,
   config: PluginConfig,
@@ -31,6 +38,8 @@ export const syncMailbox = async (
       const detail = await getThreadDetail(config, listed.threadId);
       detailedThreads.push(detail ?? listed);
     } catch (error) {
+      const message = `[flowmail] failed to fetch thread detail ${listed.threadId}: ${stringifyError(error)}`;
+      api.logger?.warn?.(message);
       api.log?.warn?.('[flowmail] failed to fetch thread detail', listed.threadId, error);
       detailedThreads.push(listed);
     }
