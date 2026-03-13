@@ -1,0 +1,96 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "flowmail",
+  "main": "cloudflare/worker.ts",
+  "compatibility_date": "2026-03-12",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "observability": {
+    "enabled": true
+  },
+
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/auth/*"]
+  },
+
+  "vars": {
+    "APP_BASE_URL": "https://app.example.com",
+    "FRONTEND_BASE_URL": "https://app.example.com",
+    "COOKIE_SECURE": "true",
+    "NOTION_VERSION": "2025-09-03"
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "flowmail-prod",
+      "database_id": "<D1_DATABASE_ID>",
+      "migrations_dir": "cloudflare/d1"
+    }
+  ],
+
+  "r2_buckets": [
+    {
+      "binding": "ATTACHMENTS",
+      "bucket_name": "flowmail-attachments"
+    }
+  ],
+
+  "queues": {
+    "producers": [
+      {
+        "binding": "MAIL_SYNC_QUEUE",
+        "queue": "tradecase-mail-sync"
+      },
+      {
+        "binding": "CASE_EXTRACT_QUEUE",
+        "queue": "tradecase-case-extract"
+      },
+      {
+        "binding": "EXPORT_QUEUE",
+        "queue": "tradecase-export"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "tradecase-mail-sync",
+        "max_batch_size": 10,
+        "max_batch_timeout": 5,
+        "max_retries": 10,
+        "dead_letter_queue": "tradecase-mail-sync-dlq"
+      },
+      {
+        "queue": "tradecase-case-extract",
+        "max_batch_size": 10,
+        "max_batch_timeout": 5,
+        "max_retries": 10,
+        "dead_letter_queue": "tradecase-case-extract-dlq"
+      },
+      {
+        "queue": "tradecase-export",
+        "max_batch_size": 10,
+        "max_batch_timeout": 5,
+        "max_retries": 10,
+        "dead_letter_queue": "tradecase-export-dlq"
+      }
+    ]
+  },
+
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "WORKSPACE_SYNC",
+        "class_name": "WorkspaceSyncCoordinator"
+      }
+    ]
+  },
+
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["WorkspaceSyncCoordinator"]
+    }
+  ]
+}

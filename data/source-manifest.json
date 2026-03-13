@@ -1,0 +1,72 @@
+[
+  {
+    "id": "g2-missive-reviews",
+    "category": "pain-signals",
+    "role": "shared-inbox-user",
+    "url": "https://www.g2.com/products/missive/reviews",
+    "reason": "Shared inbox complaints and collaboration pain signals."
+  },
+  {
+    "id": "reddit-smallbusiness-invoicing",
+    "category": "pain-signals",
+    "role": "small-business-owner",
+    "url": "https://www.reddit.com/r/smallbusiness/comments/1b24cjj",
+    "reason": "Invoice follow-up and mailbox tracking pain."
+  },
+  {
+    "id": "reddit-odoo-mail-attachments",
+    "category": "pain-signals",
+    "role": "operations-user",
+    "url": "https://www.reddit.com/r/Odoo/comments/1b378bz",
+    "reason": "Attachment and external reply ingestion problems."
+  },
+  {
+    "id": "reddit-xero-sales-orders",
+    "category": "pain-signals",
+    "role": "finance-user",
+    "url": "https://www.reddit.com/r/xero/comments/1kxv81p",
+    "reason": "Sales-order gap between quote and invoice."
+  },
+  {
+    "id": "dhl-commercial-invoice",
+    "category": "document-schema",
+    "role": "carrier",
+    "url": "https://www.dhl.com/discover/en-us/global-logistics-advice/import-export-advice/commercial-invoice",
+    "reason": "Commercial invoice fields and customs expectations."
+  },
+  {
+    "id": "fedex-commercial-invoice",
+    "category": "document-schema",
+    "role": "carrier",
+    "url": "https://images.fedex.com/il/tools/invoice.html",
+    "reason": "Invoice field examples and reference template."
+  },
+  {
+    "id": "maersk-transport-docs",
+    "category": "workflow",
+    "role": "carrier",
+    "url": "https://www.maersk.com/support/website-guide/final-transport-documents",
+    "reason": "Final transport documentation steps."
+  },
+  {
+    "id": "gmail-threads-guide",
+    "category": "integration",
+    "role": "api",
+    "url": "https://developers.google.com/gmail/api/guides/threads",
+    "reason": "Thread model for Gmail ingestion."
+  },
+  {
+    "id": "graph-delta-messages",
+    "category": "integration",
+    "role": "api",
+    "url": "https://learn.microsoft.com/en-us/graph/delta-query-messages",
+    "reason": "Incremental sync for Outlook messages."
+  },
+  {
+    "id": "dhl-customs-guidelines-pdf",
+    "category": "workflow",
+    "role": "carrier",
+    "url": "https://mrt2.ap.dhl.com/reverse/content/dam/downloads/global/en/customs-guide/express_global_customs_customer_guidelines.pdf.coredownload.pdf",
+    "reason": "Attachment quality and customs data guidance."
+  }
+]

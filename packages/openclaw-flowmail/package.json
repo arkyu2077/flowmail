@@ -1,0 +1,35 @@
+{
+  "name": "@flowmail/openclaw-flowmail",
+  "version": "0.1.0",
+  "description": "FlowMail — turn business email into persistent workflows for OpenClaw",
+  "author": "dongd",
+  "homepage": "https://flowmail.email",
+  "license": "Apache-2.0",
+  "keywords": [
+    "openclaw",
+    "clawhub",
+    "plugin",
+    "gmail",
+    "email",
+    "workflow",
+    "agent",
+    "gog",
+    "flowmail"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "files": [
+    "LICENSE",
+    "openclaw.plugin.json",
+    "README.md",
+    "skills",
+    "src"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./src/index.ts"
+    ]
+  }
+}

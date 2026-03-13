@@ -1,0 +1,82 @@
+{
+  "name": "flowmail",
+  "version": "0.1.0",
+  "displayName": "TradeCase OS",
+  "description": "Turn external-trade mailbox threads into order-state visibility, missing-document alerts, case summaries, and draft replies.",
+  "entryMode": "api",
+  "apiBaseUrl": "http://localhost:3027/api",
+  "workspaceId": "demo-workspace",
+  "auth": {
+    "type": "workspace_token",
+    "note": "Mailbox OAuth is handled by TradeCase OS, not by the skill."
+  },
+  "tools": [
+    {
+      "name": "connect_mailbox",
+      "description": "Initiate Gmail or Outlook read-only mailbox OAuth for the current workspace.",
+      "method": "POST",
+      "path": "/workspaces/{workspaceId}/mailbox-connections/initiate",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": ["gmail", "outlook"]
+          }
+        },
+        "required": ["provider"]
+      }
+    },
+    {
+      "name": "list_trade_cases",
+      "description": "List trade cases with optional status and search filters.",
+      "method": "GET",
+      "path": "/workspaces/{workspaceId}/cases"
+    },
+    {
+      "name": "get_trade_case",
+      "description": "Return one trade case with analysis details.",
+      "method": "GET",
+      "path": "/workspaces/{workspaceId}/cases/{caseId}"
+    },
+    {
+      "name": "get_missing_documents",
+      "description": "List cases that are blocked by missing documents or fields.",
+      "method": "GET",
+      "path": "/workspaces/{workspaceId}/missing-documents"
+    },
+    {
+      "name": "get_stuck_cases",
+      "description": "List cases that are currently blocked or need intervention.",
+      "method": "GET",
+      "path": "/workspaces/{workspaceId}/stuck-cases"
+    },
+    {
+      "name": "summarize_case",
+      "description": "Summarize one trade case for a quick operational update.",
+      "method": "POST",
+      "path": "/workspaces/{workspaceId}/cases/{caseId}/summarize"
+    },
+    {
+      "name": "draft_reply",
+      "description": "Generate a follow-up draft based on the selected trade case.",
+      "method": "POST",
+      "path": "/workspaces/{workspaceId}/cases/{caseId}/draft-reply"
+    },
+    {
+      "name": "assistant_query",
+      "description": "Run a natural-language operational query against the trade-case workspace.",
+      "method": "POST",
+      "path": "/workspaces/{workspaceId}/assistant/query",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          }
+        },
+        "required": ["query"]
+      }
+    }
+  ]
+}
