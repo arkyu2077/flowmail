@@ -154,13 +154,31 @@ export interface FlowMailPluginApi {
       entries?: Record<string, { config?: Record<string, unknown> }>;
     };
   };
+  pluginConfig?: Record<string, unknown>;
   registerTool?: (tool: {
     name: string;
+    label: string;
     description: string;
     optional?: boolean;
-    parameters?: Record<string, unknown>;
-    execute: (callId: string, params: Record<string, unknown>) => Promise<{ content: Array<{ type: 'text'; text: string }> }>;
+    parameters: Record<string, unknown>;
+    execute: (
+      callId: string,
+      params: Record<string, unknown>,
+      signal?: AbortSignal,
+      onUpdate?: (partialResult: {
+        content: Array<{ type: 'text'; text: string }>;
+        details: unknown;
+      }) => void,
+    ) => Promise<{
+      content: Array<{ type: 'text'; text: string }>;
+      details: unknown;
+    }>;
   }) => void;
+  logger?: {
+    info?: (message: string) => void;
+    warn?: (message: string) => void;
+    error?: (message: string) => void;
+  };
   log?: {
     info?: (...args: unknown[]) => void;
     warn?: (...args: unknown[]) => void;
